@@ -344,7 +344,7 @@ where
     ) -> AuthResult<Token<Claims>> {
         match header_map.get(AUTHORIZATION).map(HeaderValue::to_str) {
             Some(Ok(header_value)) => {
-                let token_value = if header_value.strip_prefix("Bearer").is_some() {
+                let token_value = if let Some(header_value) = header_value.strip_prefix("Bearer") {
                     header_value.trim()
                 } else {
                     // to-do: better error handling
